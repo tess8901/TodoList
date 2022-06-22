@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Todo list</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div id="app">
+        <div class="center">
+            <h1>Todo List</h1>
+            <input v-model="newTodo" @keyup.enter="createTodo">
+            <p>（輸入完，按enter即可新增）</p>
+        </div>
+        <ul id="todo-list">
+            <li v-for="(todo, index) in todos" :data-id="todo.id" :class="{ complete: todo.complete }">
+                <input type="checkbox" v-model="todo.complete" > 
+
+                <div v-show="editModeId!==todo.id" class="content"@dblclick="enterEditMode(todo, $event)">{{ todo.content }}</div>
+                <input v-show="editModeId===todo.id" v-model="todo.content" 
+                        @keyup.enter="updateTodo" @keyup.esc="cancelUpdateTodo(todo)">
+                <button @click="deleteTodo(todo, index)">刪除</button>
+            </li>
+        </ul>
+    </div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="action.js" charset="utf-8"></script>
+</body>
+</html>
